@@ -6,6 +6,10 @@
 - Fiddler v5.0
 - Editor
 
+## Download
+
+[FILE](https://raw.githubusercontent.com/crxzy/UNTITLE/master/CustomRules.js)
+
 ## 使用
 
 - 复制 CustomRules.js 到 %userprofile%\Documents\Fiddler2\Scripts\ 并覆盖
