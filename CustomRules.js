@@ -243,20 +243,22 @@ class Handlers
 		if (targetUrl != "" && oSession.RequestMethod == "GET" && oSession.uriContains(targetUrl)) {
 			oSession["ui-backcolor"] = "yellow";
 			var req = parseUrlParam(oSession.url);
-			OnBeforeTargetUrlRequest(oSession, req);
+			OnBeforeTargetUrlRequest(oSession, req);			
 			// RETURN
 			var params = "?";
 			for(var p in req) {
 				params = params + p + "=" + req[p] + "&";
-			}
+			}			
 			var preurl = "";
 			if (oSession.uriContains("?")) {
 				preurl = oSession.url.split("?")[0];     
 			} else {
 				preurl = oSession.url;
 			}
-                       
+			
+	
 			oSession.url = preurl + params;
+			
 		}
 	}
 
@@ -348,16 +350,18 @@ class Handlers
 			oSession["ui-backcolor"] = "yellow";
 			var req = parseUrlParam(oSession.url);
 			var callback = req['callback'];
-			
 			var respString = oSession.GetResponseBodyAsString();
-            
+			
 			if (callback != undefined) {
 				respString = respString.Substring(callback.Length+1, respString.Length-callback.Length-2);		
-			}
-            
+			}            
             
 			var respJson = Fiddler.WebFormats.JSON.JsonDecode(respString);
 			var resp = respJson.JSONObject;			
+			
+			if(resp == undefined) {
+				return;
+			}
         
 			OnBeforeTargetUrlResponse(oSession, resp);	           	
 			respString = Fiddler.WebFormats.JSON.JsonEncode(resp);		
@@ -375,7 +379,7 @@ class Handlers
 
 	static function parseUrlParam(url: String): Object {
 		var pos = url.indexOf("?");
-		if(pos < 0) 
+		if(pos < 0) 			
 			return {};
 
 		var params = url.substring(pos+1).split("&");
@@ -590,6 +594,10 @@ class Handlers
 		}
 	}
 }
+
+
+
+
 
 
 
