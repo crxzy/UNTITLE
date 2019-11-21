@@ -82,17 +82,16 @@ class Handlers
 		
 			
 	static function OnBeforeTargetUrlRequest(oSession :Session, req: Object) {
-		// TODO:
 		// 只支持GET METHOD
 		// 修改 req['xxx'] = xxx 增加或修改请求参数    
+		// TODO:
 
 	}
 		
     
 	static function OnBeforeTargetUrlResponse(oSession :Session, resp: Object) {
-		// TODO:
-		// resp['light_count']=5;
 		// 修改 resp['xxx'] = xxx 增加或修改响应内容    
+		// TODO:
 	}
 
 
@@ -342,7 +341,7 @@ class Handlers
 
 		
 
-		if (targetUrl != "" && oSession.uriContains(targetUrl) && oSession.responseCode == 200) {
+		if (targetUrl != "" && oSession.uriContains(targetUrl)) {
 			// var url = oSession.url;
 			// var regex = /(callback)=([^&#]*)/;
 			// var matches = url.match(regex);
@@ -359,9 +358,6 @@ class Handlers
 			var respJson = Fiddler.WebFormats.JSON.JsonDecode(respString);
 			var resp = respJson.JSONObject;			
 			
-			if(resp == undefined) {
-				return;
-			}
         
 			OnBeforeTargetUrlResponse(oSession, resp);	           	
 			respString = Fiddler.WebFormats.JSON.JsonEncode(resp);		
@@ -370,8 +366,9 @@ class Handlers
 			if (callback != undefined) {                
 				data = callback + "(" + respString + ")";
 			}			
-        
-			oSession.utilSetResponseBody(data);
+        	
+			if (resp != undefined)				
+				oSession.utilSetResponseBody(data);
 		}
 	}
 
@@ -594,6 +591,12 @@ class Handlers
 		}
 	}
 }
+
+
+
+
+
+
 
 
 
