@@ -305,6 +305,10 @@ class Handlers
 			oSession.bBufferResponse = true;
 		}
 
+		if (targetUrl != "" && oSession.uriContains(targetUrl)) {
+			oSession.bBufferResponse = true;
+		}
+
 	}
 
 	static function OnBeforeResponse(oSession: Session) {
