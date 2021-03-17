@@ -77,21 +77,118 @@ class Handlers
 	Utilities.LaunchHyperlink(sAction);
 	}
 	*/
-	static var targetUrl = ''; 
-		
+
+	//static var targetUrl = 'gamer_rank';   
+	//static var targetUrl = '/zxz/datetime.php';  
+	static var exactly = true;
+	static var targetUrl = ''
+
+	//static var targetUrl = 'draw_log?'
 		
 			
 	static function OnBeforeTargetUrlRequest(oSession :Session, req: Object) {
 		// 只支持GET METHOD
 		// 修改 req['xxx'] = xxx 增加或修改请求参数    
 		// TODO:
-
+		//req['help_page_key'] = 'f03be1a7361e403f897f2e8299aea62f';
+		//req['user_id'] = 3;
+		//req['content'] = '123';
+		//req['host_test'] = 1;
+		//req['cursor'] = '12178';
+		//req['limit'] = '6';
+		
+		//req['cursor'] = 'EARLIEST';
+		//req['limit'] = 10;
+		//oSession.host = 'www.google.com'
+		//req['period'] = '2019';
+		
+		//req['action_type'] = 'media_like';
+		//oSession.bypassGateway = true;
+		
+		 
 	}
 		
     
 	static function OnBeforeTargetUrlResponse(oSession :Session, resp: Object) {
 		// 修改 resp['xxx'] = xxx 增加或修改响应内容    
 		// TODO:
+		//resp['draw_chance'] = 100; 
+		//resp['draw_log'][0]['prize_type'] = '1';
+		//resp['draw_log'][1]['prize_type'] = '2';
+		//resp['view_user_info']['game_data']['score'] = 35;
+		//resp['redeem_log'][0]['bonus_info'] = 1;
+		//resp['redeem_log'][1]['bonus_info'] = 2;
+		//resp['usernumber'] = 150000; 
+		var nullstr:String = null;
+		//resp['cur_game_data'] = bpResponseURI;
+		//resp['extra'] = 5;
+		//resp['msg'] = '';
+		//resp['success'] = true;
+		
+		//resp['redeemed'][0]['prize_name'] = '2';
+		//resp['data']['actions'][5]['media'][0]['type'] = 'photo';
+		
+		//resp['help_log'][0]['extra'] = '7';
+		
+		//resp['help_log'][0]['op_time'] = '2020-06-07 09:00:00';
+
+		//resp['curr_time'] = '2020-07-31 12:00:00';
+		
+		//oSession.utilSetResponseBody("jQuery111303492062685667814_1595930926774(1597307751)");
+	//	return true;
+		
+		//resp['data']['lastest_version']=1115002;
+		//resp['data']['ANDROID_PHOTO_COMPRESSION_OPEN'] = true
+		
+		//resp['ranks'][2]['role_name'] = '12321';
+		//resp['ranks'][8]['score_total'] = 1000;
+		//resp['ranks'][4]['score_total'] = 100;
+		
+		//resp['help_log'][4]['extra'] = "5";
+		//resp['help_log'][3]['extra'] = "4";
+		//resp['help_log'][2]['extra'] = "3";
+		//resp['help_log'][1]['extra'] = "2";
+		//resp['help_log'][0]['extra'] = "2";
+		//s = {}
+		//resp['help_log1'] = "{'1':'222'}"
+		//var bpResponseURI:String = null;
+		//resp['success'] = true;
+		//resp['help_num'] = 2;
+		//resp['light_count'] = 3;
+		//resp['prize_type'] = 'qin008';
+		//resp['prize_content'] = 'qin008';
+		//resp['extra'] = bpResponseURI;
+		//resp['ranks'].push({"headimgurl": "", "light_count": 10, "nickname": "walter", "id": 162, "extra": null})
+		
+		//resp['data']['IOS_YIDUN_LOGIN'] = false;
+		
+		//resp['ranks'][0]['light_count'] = 999;
+		//resp['ranks'][1]['light_count'] = 101;
+
+		//resp['data']['ANDROID_YIDUN_LOGIN'] = true;
+		
+		//resp['data']['lastest_version'] = '20040004';
+		//resp['data']['min_support_version'] = '20040000';
+		//resp['data']['ENABLE_PC_VERSION'] = false;
+		
+		//resp['data']['conf']['header_notice'] = '';
+		
+		//resp['data']['COMMON']['enable_layout9_uid'] = 100;
+		
+		//resp['data']['media']['0']['cover_url'] = bpResponseURI;
+		//resp['data'] = 'error';
+		//resp['status'] = 'error';
+		
+		//resp['draw_log'][0]['prize_type'] = 'qin006';
+		//resp['draw_chance'] = 999;
+		//resp['game_events'][0]['name'] = "1111111111111111111111111111111111"
+		//resp['data']['lottery_time'] = 999;
+		//resp['data']['POP_MSG_DURATION'] = 1;
+		//resp['data']['ENABLE_SPRING_FESTIVAL_SHARE_STYLE'] = false;
+		
+
+		
+		return false;
 	}
 
 
@@ -178,6 +275,8 @@ class Handlers
 		// if (oSession.uriContains("/sandbox/")) {
 		//     oSession.oFlags["x-breakrequest"] = "yup";	// Existence of the x-breakrequest flag creates a breakpoint; the "yup" value is unimportant.
 		// }
+		 
+		
 
 		if ((null != gs_ReplaceToken) && (oSession.url.indexOf(gs_ReplaceToken)>-1)) {   // Case sensitive
 			oSession.url = oSession.url.Replace(gs_ReplaceToken, gs_ReplaceTokenWith); 
@@ -200,9 +299,9 @@ class Handlers
 
 		if (m_SimulateModem) {
 			// Delay sends by 300ms per KB uploaded.
-			oSession["request-trickle-delay"] = "300"; 
+			oSession["request-trickle-delay"] = "500"; 
 			// Delay receives by 150ms per KB downloaded.
-			oSession["response-trickle-delay"] = "150"; 
+			oSession["response-trickle-delay"] = "350"; 
 		}
 
 		if (m_DisableCaching) {
@@ -237,9 +336,10 @@ class Handlers
 			oSession["ui-backcolor"] = "Lavender";
 		}
         
- 
 
-		if (targetUrl != "" && oSession.RequestMethod == "GET" && oSession.uriContains(targetUrl)) {
+ 		FiddlerObject.log(oSession.fullUrl + "==============" + oSession.url)
+		if ((targetUrl != "" && oSession.RequestMethod == "GET") && (exactly == true ? oSession.fullUrl  == targetUrl : oSession.uriContains(targetUrl))) {
+		//if (targetUrl != "" && oSession.RequestMethod == "GET" && oSession.uriContains(targetUrl)) {
 			oSession["ui-backcolor"] = "yellow";
 			var req = parseUrlParam(oSession.url);
 			OnBeforeTargetUrlRequest(oSession, req);			
@@ -255,8 +355,14 @@ class Handlers
 				preurl = oSession.url;
 			}
 			
-	
-			oSession.url = preurl + params;
+			FiddlerObject.log("================" + params + "=======" + preurl)
+			if (params == "?") {
+				oSession.url = preurl 
+			} else {
+				oSession.url = preurl + params;	
+			}
+				
+			
 			
 		}
 	}
@@ -304,7 +410,7 @@ class Handlers
 			oSession["x-breakresponse"]="uri";
 			oSession.bBufferResponse = true;
 		}
-
+		
 		if (targetUrl != "" && oSession.uriContains(targetUrl)) {
 			oSession.bBufferResponse = true;
 		}
@@ -343,9 +449,9 @@ class Handlers
 		// }
         
 
-		
-
-		if (targetUrl != "" && oSession.uriContains(targetUrl)) {
+		FiddlerObject.log(oSession.fullUrl + "==============" + oSession.url)
+		//if (targetUrl != "" && oSession.fullUrl == targetUrl) {
+		if (targetUrl != "" && (exactly == true ? oSession.fullUrl == targetUrl : oSession.uriContains(targetUrl))) {
 			// var url = oSession.url;
 			// var regex = /(callback)=([^&#]*)/;
 			// var matches = url.match(regex);
@@ -363,7 +469,10 @@ class Handlers
 			var resp = respJson.JSONObject;			
 			
         
-			OnBeforeTargetUrlResponse(oSession, resp);	           	
+			var flag = OnBeforeTargetUrlResponse(oSession, resp);	   
+			if(flag) {
+				return
+			}
 			respString = Fiddler.WebFormats.JSON.JsonEncode(resp);		
             
 			var data = respString; 
@@ -595,9 +704,6 @@ class Handlers
 		}
 	}
 }
-
-
-
 
 
 
